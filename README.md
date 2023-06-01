@@ -20,6 +20,8 @@ These are bundled and exposed in a [REST API Gateway](https://github.com/Kohlbac
 
 * [Data Transfer Object Model and Generators](https://github.com/KohlbacherLab/bwHC-Data-Transfer-Objects) / [Display Object Model (Views)](https://github.com/KohlbacherLab/bwHC-View-Objects)
 
+* [Extension methods for DTOs](https://github.com/KohlbacherLab/bwHC-MTB-DTO-Extensions)
+
 * [ICD-10-GM and ICD-O-3 Catalogs](https://github.com/KohlbacherLab/bwHC-ICD-Catalogs)
 
 * [ATC Medication Catalog](https://github.com/KohlbacherLab/bwHC-Medication-Catalog)
