@@ -3,7 +3,7 @@
 Docker components for the bwHC Backend (adapted from [https://github.com/CCC-MF/docker-bwHealthCloud/blob/main/Backend.Dockerfile](https://github.com/CCC-MF/docker-bwHealthCloud/blob/main/Backend.Dockerfile)).
 
 The image contains the [backend app](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/tree/master) as obtained from the "sbt dist" task.
-It is usable 'as is'; site-specific customization is performed through evironment variables and externally provided config files.
+It is usable 'as is'; site-specific customization is performed through environment variables and externally provided config files.
 
 
 ## Registry
@@ -24,7 +24,7 @@ The following environment variables have default settings but can be overriden a
 
 In addition, the following volumes in the image must be mounted from the host file system:
 
-* `/bwhc_config`: Contains the backend's configuration files production.conf, logback.xml and bwhcConnectorConfig.xml
+* `/bwhc_config`: Contains the backend's configuration files [production.conf](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/blob/master/deployment/production.conf), [logback.xml](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/blob/master/deployment/logback.xml) and bwhcConnectorConfig.xml (the latter depends on the used connector: the [Peer-to-peer connector](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/blob/master/deployment/bwhcConnectorConfig.xml) or [DNPM-Broker connector](https://github.com/KohlbacherLab/bwHC-Query-Service/tree/master/bwhc_broker_connector#configuration))
 * `/bwhc_data`: The directory for data persistence
 
 
