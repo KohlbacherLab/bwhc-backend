@@ -1,0 +1,16 @@
+services:
+  app:
+    image: bwhc-backend
+
+    ports:
+      - 9000:9000
+
+    environment:
+      ZPM_SITE: <TODO>
+
+    volumes:
+      # External volume for config files with site-specific adaptations
+      - /PATH/TO/HOST/DIR/bwhc_config:/bwhc_config
+
+      # External volume for bwhc data persistence
+      - /PATH/TO/HOST/DIR/bwhc_data:/bwhc_data
