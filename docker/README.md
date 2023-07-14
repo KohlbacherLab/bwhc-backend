@@ -8,7 +8,7 @@ It is usable 'as is'; site-specific customization is performed through environme
 
 ## Registry
 
-Images are available at [https://github.com/orgs/KohlbacherLab/packages](https://github.com/orgs/KohlbacherLab/packages)
+Images are available at [https://github.com/orgs/KohlbacherLab/packages](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/pkgs/container/bwhc-backend)
 
 
 ## Usage
