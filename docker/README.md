@@ -1,4 +1,4 @@
-# bwHC Backend: Docker 
+# bwHC Backend: Docker
 
 Docker components for the bwHC Backend (adapted from [https://github.com/CCC-MF/docker-bwHealthCloud/blob/main/Backend.Dockerfile](https://github.com/CCC-MF/docker-bwHealthCloud/blob/main/Backend.Dockerfile)).
 
@@ -28,15 +28,37 @@ In addition, the following volumes in the image must be mounted from the host fi
 * `/bwhc_data`: The directory for data persistence
 
 
-The backend application will run on the container's Port 9000. 
+The backend application will run on the container's Port 9000.
 
+### General information about using Docker
 
-For instance, using docker compose:
+You are required to have Docker (and Docker compose) installed on your host/server. Please read the following information about installing Docker, if you have to install it first: https://docs.docker.com/engine/install/
+
+For more information about Docker und Docker compose, please have a look at the documentations: https://docs.docker.com/reference/
+
+### Running the container using plain Docker
+
+To run the container you can use the following command:
+
+```
+docker run --rm --name bwhc-backend \
+  -p 9000:9000 \
+  -e ZPM_SITE=Tübungen \
+  -v /PATH/TO/HOST/DIR/bwhc_config:/bwhc_config \
+  -v /PATH/TO/HOST/DIR/bwhc_data:/bwhc_data \
+  ghcr.io/kohlbacherlab/bwhc-backend:1.0-snapshot-broker-connector
+```
+
+Please be aware to replace `PATH/TO/HOST/DIR` with correct directory on your server.
+
+### Running the container using Docker compose
+
+Create a Docker compose file named `docker-compose.yml`, containing all information used above:
 
 ```
 services:
   app:
-    image: bwhc-backend
+    image: ghcr.io/kohlbacherlab/bwhc-backend:1.0-snapshot-broker-connector
 
     ports:
       - 9000:9000
@@ -49,4 +71,14 @@ services:
       - /PATH/TO/HOST/DIR/bwhc_data:/bwhc_data
 ```
 
+Use the following command to start the Docker container in background or dismiss option `-d` to start the container in foreground with the ability to stop it using ctrl-c:
 
+```
+docker-compose up -d
+```
+
+If you are using newer Docker installations, you might want to use build in `compose` subcommand (without '-'):
+
+```
+docker compose up -d
+```
