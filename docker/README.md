@@ -25,14 +25,19 @@ The following environment variables have default settings but can be overriden a
 In addition, the following volumes in the image must be mounted from the host file system:
 
 * `/bwhc_config`: Contains the backend's configuration files [production.conf](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/blob/master/deployment/production.conf), [logback.xml](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/blob/master/deployment/logback.xml) and bwhcConnectorConfig.xml (the latter depends on the used connector: the [Peer-to-peer connector](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/blob/master/deployment/bwhcConnectorConfig.xml) or [DNPM-Broker connector](https://github.com/KohlbacherLab/bwHC-Query-Service/tree/master/bwhc_broker_connector#configuration))
-* `/bwhc_data`: The directory for data persistence. Make sure, the directory contains the following sub directories - otherwise application startup will fail:
-  * `data-entry`
-  * `query-data`
-  * `user-db`
-  * `hgnc`
 
+* `/bwhc_data`: The directory for data persistence. By default, the backend application will attempt to create the following sub-directories, unless they already exist:
+    * `data-entry` (to override, explicitly set env. variable [`BWHC_DATA_ENTRY_DIR`](https://github.com/KohlbacherLab/bwhc-backend/blob/main/docker/Dockerfile#L33))
+    * `query-data` (to override, explicitly set env. variable [`BWHC_QUERY_DATA_DIR`](https://github.com/KohlbacherLab/bwhc-backend/blob/main/docker/Dockerfile#L33))
+    * `user-db` (to override, explicitly set env. variable [`BWHC_USER_DB_DIR`](https://github.com/KohlbacherLab/bwhc-backend/blob/main/docker/Dockerfile#L33))
+    * `hgnc` (to override, explicitly set env. variable [`BWHC_HGNC_DIR`](https://github.com/KohlbacherLab/bwhc-backend/blob/main/docker/Dockerfile#L33))
+
+The user running the backend application must thus have corresponding permissions on the data directory, e.g. a dedicated system user to operate bwhc. See also the [manual](https://ibmi-intra.cs.uni-tuebingen.de/display/ZPM/bwHC+Prototype+Manual#bwHCPrototypeManual-LocalSiteandPersistence).
+
+See below for how to override the executing user by explicitly passing the system UserID (and optionally GroupID) in plain Docker command and Docker-compose, respectively.
 
 The backend application will run on the container's Port 9000.
+
 
 ### General information about using Docker
 
@@ -50,10 +55,11 @@ docker run --rm --name bwhc-backend \
   -e ZPM_SITE=Tübungen \
   -v /PATH/TO/HOST/DIR/bwhc_config:/bwhc_config \
   -v /PATH/TO/HOST/DIR/bwhc_data:/bwhc_data \
+  --user UserID[:GroupID] \
   ghcr.io/kohlbacherlab/bwhc-backend:1.0-snapshot-broker-connector
 ```
 
-Please be aware to replace `PATH/TO/HOST/DIR` with correct directory on your server.
+Please be aware to replace `PATH/TO/HOST/DIR` with correct directory on your server, and also set the UserId (and GroupId).
 
 ### Running the container using Docker compose
 
@@ -63,6 +69,8 @@ Create a Docker compose file named `docker-compose.yml`, containing all informat
 services:
   app:
     image: ghcr.io/kohlbacherlab/bwhc-backend:1.0-snapshot-broker-connector
+
+    user: UserID[:GroupID]
 
     ports:
       - 9000:9000
