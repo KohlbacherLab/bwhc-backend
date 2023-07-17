@@ -25,7 +25,11 @@ The following environment variables have default settings but can be overriden a
 In addition, the following volumes in the image must be mounted from the host file system:
 
 * `/bwhc_config`: Contains the backend's configuration files [production.conf](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/blob/master/deployment/production.conf), [logback.xml](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/blob/master/deployment/logback.xml) and bwhcConnectorConfig.xml (the latter depends on the used connector: the [Peer-to-peer connector](https://github.com/KohlbacherLab/bwHC-REST-API-Gateway/blob/master/deployment/bwhcConnectorConfig.xml) or [DNPM-Broker connector](https://github.com/KohlbacherLab/bwHC-Query-Service/tree/master/bwhc_broker_connector#configuration))
-* `/bwhc_data`: The directory for data persistence
+* `/bwhc_data`: The directory for data persistence. Make sure, the directory contains the following sub directories - otherwise application startup will fail:
+  * `data-entry`
+  * `query-data`
+  * `user-db`
+  * `hgnc`
 
 
 The backend application will run on the container's Port 9000.
